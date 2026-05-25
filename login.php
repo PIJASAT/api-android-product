@@ -1,5 +1,5 @@
 <?php
-    $koneksi = mysqli_connect("localhost", "root", "", "projectbulia1");
+    $koneksi = mysqli_connect("localhost", "root", "gr6882899", "db_apiproduct");
     $username = isset($_POST['username'])?$_POST['username']:'';
     $password = isset($_POST['password'])?$_POST['password']:'';
 
@@ -12,7 +12,7 @@
         exit;
     }
 
-    $query = "select * from user where= username='$username' and password='$password";
+    $query = "select * from user where username='$username' and password='$password'";
     $result = mysqli_query($koneksi, $query);
 
     if(mysqli_num_rows($result)>0) {
