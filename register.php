@@ -17,8 +17,7 @@ if (mysqli_num_rows($chek) > 0) {
     $response['status'] = "error";
     $response['message'] = "username sudah digunakan";
 } else {
-    $query = "insert into user(username, password),
-        values ('$username', 'password')";
+    $query = "insert into user(username, password) values ('$username', '$password')";
 
     if (mysqli_query($koneksi, $query)) {
         $response['status'] = "success";

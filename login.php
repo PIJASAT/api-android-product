@@ -1,5 +1,5 @@
 <?php
-    $koneksi = mysqli_connect("localhost", "root", "gr6882899", "db_apiproduct");
+    $koneksi = mysqli_connect("localhost", "root", "", "projectbulia1");
     $username = isset($_POST['username'])?$_POST['username']:'';
     $password = isset($_POST['password'])?$_POST['password']:'';
 
