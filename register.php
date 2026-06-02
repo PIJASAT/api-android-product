@@ -1,34 +1,22 @@
 <?php
+
 include 'koneksi.php';
 
-$username = isset($_POST['username']) ? $_POST['username'] : '';
-$password = isset($_POST['password']) ? $_POST['password'] : '';
+$username = $_POST['username'];
+$password = $_POST['password'];
 
-$response = array();
+$query = mysqli_query($koneksi,
+"INSERT INTO users(username,password,role)
+VALUES('$username','$password','user')");
 
-if ($username == "" || $password == "") {
-    $response['status'] = "error";
-    $response['message'] = "data tidak boleh kosong";
-    echo json_encode($response);
-    exit;
+if($query){
+    echo json_encode([
+        "status"=>"success",
+        "message"=>"Register berhasil"
+    ]);
+}else{
+    echo json_encode([
+        "status"=>"error",
+        "message"=>"Register gagal"
+    ]);
 }
-$chek = mysqli_query($koneksi, "select * from user where username = '$username'");
-
-if (mysqli_num_rows($chek) > 0) {
-    $response['status'] = "error";
-    $response['message'] = "username sudah digunakan";
-} else {
-    $query = "insert into user(username, password) values ('$username', '$password')";
-
-    if (mysqli_query($koneksi, $query)) {
-        $response['status'] = "success";
-        $response['message'] = "regis berhasil";
-    }else {
-        $response['status'] = "gagal";
-        $response['message'] = "regis gagal";
-    } 
-}
-echo json_encode($response);
-exit;
-?>
-    

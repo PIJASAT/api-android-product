@@ -1,26 +1,28 @@
 <?php
-require 'koneksi.php';
 
-$username = isset($_POST['username']) ? $_POST['username'] : '';
-$password = isset($_POST['password']) ? $_POST['password'] : '';
+include 'koneksi.php';
 
-$response = array();
+$username = $_POST['username'];
+$password = $_POST['password'];
 
-if ($username == "" || $password == "") {
-    $response['status'] = "error";
-    $response['message'] = "data tidak boleh kosong";
-    echo json_encode($response);
-    exit;
+$query = mysqli_query($koneksi,
+"SELECT * FROM users
+WHERE username='$username'
+AND password='$password'");
+
+if(mysqli_num_rows($query)>0){
+
+    $data = mysqli_fetch_assoc($query);
+
+    echo json_encode([
+        "status"=>"success",
+        "role"=>$data['role']
+    ]);
+
+}else{
+
+    echo json_encode([
+        "status"=>"error"
+    ]);
+
 }
-
-$query = "select * from user where username='$username' and password='$password'";
-$result = mysqli_query($koneksi, $query);
-
-if (mysqli_num_rows($result) > 0) {
-    $response['status'] = "success";
-    $response['message'] = "Login berhasil";
-} else {
-    $response['status'] = "gagal";
-    $response['message'] = "login gagal";
-}
-echo json_encode($response);
